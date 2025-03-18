@@ -11,6 +11,7 @@
 #include <cstdint>
 #include <vector>
 
+#pragma pack(push, 1)
 struct BMPFileHeader {
     uint16_t file_type{0x4D42};          // File type always BM which is 0x4D42
     uint32_t file_size{0};               // Size of the file (in bytes)
@@ -44,6 +45,8 @@ struct BMPInfoHeader {
 //    uint32_t unused[16]{ 0 };
 //};
 
+#pragma pack(pop)
+
 class BMPViewer
 {
 public:
@@ -51,8 +54,8 @@ public:
     ~BMPViewer();
 
 public:
-    void read(std::string &path);
-    void write(const char* path);
+    void read(const std::string &path);
+    void write();
     void show();
 
 private:

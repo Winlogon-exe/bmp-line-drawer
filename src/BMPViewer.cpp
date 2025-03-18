@@ -12,7 +12,7 @@ BMPViewer::~BMPViewer() {
 
 }
 
-void BMPViewer::read(std::string &path) {
+void BMPViewer::read(const std::string &path) {
     std::ifstream in(path, std::ios_base::binary);
     if (!in){
         throw std::runtime_error("Error opening BMP file");
@@ -24,17 +24,18 @@ void BMPViewer::read(std::string &path) {
     }
 
     in.read(reinterpret_cast<char*>(&bmp_info_header),sizeof(bmp_info_header));
-    if (bmp_info_header.bit_count != 32 && bmp_info_header.bit_count != 24){
+    if (bmp_info_header.bit_count != 24){
         throw std::runtime_error("Unsupported bit count");
     }
 
     in.seekg(file_header.offset_data, in.beg);
-    pixelData.resize(bmp_info_header.size);
+    pixelData.resize(bmp_info_header.width * bmp_info_header.height * 3);
     in.read(reinterpret_cast<char*>(pixelData.data()),pixelData.size());
+
     in.close();
 }
 
-void BMPViewer::write(const char *path) {
+void BMPViewer::write() {
 
 }
 
@@ -48,7 +49,8 @@ void BMPViewer::show() {
 
             if (red == 0 && green == 0 && blue == 0) {
                 std::cout << "#"; // Черный
-            } else {
+            }
+            else {
                 std::cout << "."; // Белый
             }
         }
