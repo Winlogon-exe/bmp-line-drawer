@@ -55,8 +55,13 @@ public:
 
 public:
     void read(const std::string &path);
-    void write();
     void show();
+
+private:
+    void drawLine(int x1, int y1, int x2, int y2);
+    void printImage();
+    void save(const std::string &outputPath);
+    std::string getOutputBMPFileName();
 
 private:
     BMPFileHeader file_header;
