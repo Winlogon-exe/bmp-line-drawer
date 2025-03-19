@@ -34,10 +34,10 @@ void BMPViewer::show() {
     std::cout << "Original image:\n";
     printImage();
 
-    drawLine(0, 0, bmp_info_header.width - 1, bmp_info_header.height - 1);  // Левая верхняя -> правая нижняя
-    drawLine(bmp_info_header.width - 1, 0, 0, bmp_info_header.height - 1);  // Правая верхняя -> левая нижняя
+    drawLine(0, 0, bmp_info_header.width - 1, bmp_info_header.height - 1);  // Upper left -> Lower right
+    drawLine(bmp_info_header.width - 1, 0, 0, bmp_info_header.height - 1);  // Upper right -> Lower left
 
-    std::cout << "\nImage with X cross:\n";
+    std::cout << "\nImage with X:\n";
     printImage();
 
     std::string outputPath = getOutputBMPFileName();
@@ -53,10 +53,10 @@ void BMPViewer::printImage() {
             uint8_t red = pixelData[pixelIndex + 2];
 
             if (red == 0 && green == 0 && blue == 0) {
-                std::cout << "#"; // Черный
+                std::cout << "#"; // black
             }
             else {
-                std::cout << "."; // Белый
+                std::cout << "."; // white
             }
         }
         std::cout << std::endl;
@@ -73,9 +73,9 @@ void BMPViewer::drawLine(int x1, int y1, int x2, int y2) {
     while (true) {
         if (x1 >= 0 && x1 < bmp_info_header.width && y1 >= 0 && y1 < bmp_info_header.height) {
             size_t pixelIndex = (y1 * bmp_info_header.width + x1) * 3;
-            pixelData[pixelIndex] = 255;     // Blue  (255 = белый)
-            pixelData[pixelIndex + 1] = 255; // Green (255 = белый)
-            pixelData[pixelIndex + 2] = 255; // Red   (255 = белый)
+            pixelData[pixelIndex] = 255;     // Blue  (255 = white)
+            pixelData[pixelIndex + 1] = 255; // Green (255 = white)
+            pixelData[pixelIndex + 2] = 255; // Red   (255 = white)
         }
 
         if (x1 == x2 && y1 == y2)
@@ -104,7 +104,15 @@ std::string BMPViewer::getOutputBMPFileName() {
     std::string path;
     std::cout << "Enter output BMP file name: ";
     std::cin >> path;
+    path += ".bmp";
+
+    std::filesystem::path exeDir = std::filesystem::current_path();
+    std::filesystem::path outputDir = exeDir.parent_path() / "output";
+
+    if (!std::filesystem::exists(outputDir)) {
+        std::filesystem::create_directory(outputDir);
+    }
+
+    path = (outputDir / path).string();
     return path;
 }
-
-

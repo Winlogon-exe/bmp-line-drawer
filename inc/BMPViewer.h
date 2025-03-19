@@ -5,11 +5,11 @@
 #ifndef ZADANIE_BMPVIEWER_H
 #define ZADANIE_BMPVIEWER_H
 
-#include <windows.h>
 #include <fstream>
 #include <iostream>
 #include <cstdint>
 #include <vector>
+#include <filesystem>
 
 #pragma pack(push, 1)
 struct BMPFileHeader {

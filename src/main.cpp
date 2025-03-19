@@ -7,10 +7,18 @@ std::string getInputBMPFile(){
     return path;
 }
 
+void pause(){
+    std::cout << "Press Enter to exit...";
+    std::cin.ignore();
+    std::cin.get();
+}
+
 int main() {
     BMPViewer viewer;
     std::string path = getInputBMPFile();
     viewer.read(path);
     viewer.show();
+
+    pause();
     return 0;
 }
