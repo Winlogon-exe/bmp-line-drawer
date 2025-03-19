@@ -14,11 +14,11 @@ void pause(){
 }
 
 int main() {
-    BMPViewer viewer;
+    BMP::BMPViewer viewer;
     std::string path = getInputBMPFile();
     viewer.read(path);
     viewer.show();
-
     pause();
+
     return 0;
 }
